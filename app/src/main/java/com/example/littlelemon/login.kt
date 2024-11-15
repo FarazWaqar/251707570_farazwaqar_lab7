@@ -49,10 +49,6 @@ fun LoginScreen(navcontroller: NavController) {
             onClick = {
                 if (username.value == "admin" && password.value == "ad123") {
                     navcontroller.navigate(Routes.HomeScreen)
-                    errorMessage.value = ""
-                } else {
-                    // Handle incorrect login (Optional)
-                    errorMessage.value = "Incorrect username or password. Please try again."
                 }
             },
             colors = ButtonDefaults.buttonColors(Color(0xFF495E57))
