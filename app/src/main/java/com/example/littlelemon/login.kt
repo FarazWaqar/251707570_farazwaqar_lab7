@@ -16,41 +16,47 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.littlelemon.R
 import com.example.littlelemon.Routes
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+
 
 
 @Composable
-fun LoginScreen(navcontroller: NavController){
-    Column(
+fun LoginScreen(navcontroller: NavController) {
+    val username = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
 
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-
         modifier = Modifier.fillMaxSize()
-
-
-
-    ){
+    ) {
         Image(
-            painter = painterResource(
-                id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo Image"
         )
         TextField(
-            value = "",
-            onValueChange = {},
-            label = { Text(text = "Username") },
+            value = username.value,
+            onValueChange = { username.value = it },
+            label = { Text(text = "Username") }
         )
         TextField(
-            value = "",
-            onValueChange = {},
+            value = password.value,
+            onValueChange = { password.value = it },
             label = { Text(text = "Password") }
         )
         Button(
             onClick = {
-                navcontroller.navigate(Routes.HomeScreen)
+                if (username.value == "admin" && password.value == "ad123") {
+                    navcontroller.navigate(Routes.HomeScreen)
+                    errorMessage.value = ""
+                } else {
+                    // Handle incorrect login (Optional)
+                    errorMessage.value = "Incorrect username or password. Please try again."
+                }
             },
             colors = ButtonDefaults.buttonColors(Color(0xFF495E57))
-        ){
+        ) {
             Text(
                 text = "Login",
                 color = Color(0XFFEDEFEE)
@@ -59,11 +65,6 @@ fun LoginScreen(navcontroller: NavController){
     }
 }
 
-/*
-@Preview
-@Composable
-fun LoginScreenPreview(){
-    LoginScreen()
-}
 
-*/
+
+
